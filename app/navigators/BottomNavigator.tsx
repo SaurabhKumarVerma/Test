@@ -4,94 +4,79 @@ import { ScreenName } from "../types/ScreenName/ScreenName"
 import HomeScreen from "../screen/HomeScreen/HomeScreen"
 import CategoriesScreen from "../screen/CategoriesScreen/CategoriesScreen"
 import FavouriteScreen from "../screen/FavouriteScreen/FavouriteScreen"
-import GroceryIcon, { IconSetName } from "../common/Icon"
 import { color } from "../theme/colors"
 import { StyleSheet } from "react-native"
-import AnimatedTabBar, { TabsConfigsType } from "curved-bottom-navigation-bar"
 import MoreOptionScreen from "../screen/MoreOptionScreen/MoreOptionScreen"
+import TabButton from "./TabButton"
 
 const Tab = createBottomTabNavigator()
-
 function BottomNavigator() {
-  const tabs: TabsConfigsType = {
-    Home: {
-      icon: ({ progress, focused }) => (
-        <GroceryIcon
-          name={focused ? "home-sharp" : "home-outline"}
-          iconSetName={IconSetName.IONICONS}
-          size={30}
-          color={focused ? color.darkYellow : color.black45}
-        />
-      ),
+  const tabs = [
+    {
+      id: 1,
+      title: ScreenName.HOME,
+      screen: ScreenName.HOME,
+      icon: "home",
+      Component: HomeScreen,
     },
-    Categories: {
-      icon: ({ progress, focused }) => (
-        <GroceryIcon
-          name={focused ? "appstore1" : "appstore-o"}
-          iconSetName={IconSetName.ANTDESIGNE}
-          size={30}
-          color={focused ? color.darkYellow : color.black45}
-        />
-      ),
+    {
+      id: 2,
+      title: ScreenName.CATEGORIES_SCREEN,
+      screen: ScreenName.CATEGORIES_SCREEN,
+      icon: "appstore1",
+      Component: CategoriesScreen,
     },
-    Favourite: {
-      icon: ({ progress, focused }) => (
-        <GroceryIcon
-          name={focused ? "heart" : "hearto"}
-          iconSetName={IconSetName.ANTDESIGNE}
-          size={30}
-          color={focused ? color.darkYellow : color.black45}
-        />
-      ),
+    {
+      id: 3,
+      title: ScreenName.FAVOURITE_SCREEN,
+      screen: ScreenName.FAVOURITE_SCREEN,
+      icon: "heart",
+      Component: FavouriteScreen,
     },
-    MoreOptionScreen: {
-      icon: ({ progress, focused }) => (
-        <GroceryIcon
-          name={focused ? "ellipsis-vertical-sharp" : "ellipsis-vertical-outline"}
-          iconSetName={IconSetName.IONICONS}
-          size={30}
-          color={focused ? color.darkYellow : color.black45}
-        />
-      ),
+    {
+      id: 4,
+      title: ScreenName.MORE_OPTION_SCREEN,
+      screen: ScreenName.MORE_OPTION_SCREEN,
+      icon: "dots-three-vertical",
+      Component: MoreOptionScreen,
     },
-  }
+  ]
 
   return (
     <>
       <Tab.Navigator
-        screenOptions={() => ({
+        initialRouteName={"Home"}
+        screenOptions={{
           headerShown: false,
-          tabBarShowLabel: false,
-          tabBarInactiveTintColor: color.textColor,
-          tabBarStyle: styles.tabBarStyle,
-          tabBarActiveTintColor: color.darkYellow,
-        })}
-        tabBar={(props) => (
-          <AnimatedTabBar tabs={tabs} {...props} titleShown={false} dotColor={color.black90} />
-        )}
+          tabBarStyle: styles.tabBar,
+        }}
       >
-        <Tab.Screen
-          name={ScreenName.HOME}
-          component={HomeScreen}
-          options={() => ({
-            tabBarActiveTintColor: color.darkYellow,
-          })}
-        />
-        <Tab.Screen name={ScreenName.CATEGORIES_SCREEN} component={CategoriesScreen} />
-        <Tab.Screen name={ScreenName.FAVOURITE_SCREEN} component={FavouriteScreen} />
-        <Tab.Screen name={ScreenName.MORE_OPTION_SCREEN} component={MoreOptionScreen} />
+        {tabs.map((item, index) => (
+          <Tab.Screen
+            key={item.id}
+            name={item.screen}
+            component={item.Component}
+            options={{
+              tabBarShowLabel: false,
+              tabBarButton: (props) => <TabButton item={item} {...props} />,
+            }}
+          />
+        ))}
       </Tab.Navigator>
     </>
   )
 }
 const styles = StyleSheet.create({
-  tabBarStyle: {
-    backgroundColor: color.transparent,
-    borderTopWidth: 0,
-    height: 58,
-    left: 10,
+  tabBar: {
+    alignItems: "center",
+    borderColor: color.white,
+    borderRadius: 16,
+    borderWidth: 0.5,
+    bottom: 25,
+    height: 70,
+    justifyContent: "center",
+    marginHorizontal: 16,
     position: "absolute",
-    right: 10,
   },
 })
 

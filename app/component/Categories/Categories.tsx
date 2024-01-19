@@ -3,12 +3,16 @@ import React from "react"
 
 const Categories = () => {
   return (
-    <View>
-      <Text>Categories</Text>
+    <View style={styles.container}>
+      <Text style={{ textAlign: "center" }}>Categories</Text>
     </View>
   )
 }
 
 export default Categories
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 50,
+  },
+})
