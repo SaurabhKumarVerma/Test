@@ -1,20 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+/* eslint-disable react-native/no-color-literals */
+import React from "react"
+import { StatusBar } from "expo-status-bar"
+import { SafeAreaView, StyleSheet, Text } from "react-native"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { MainNavigator } from "./app/app"
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <SafeAreaView style={styles.container}>
+      <MainNavigator />
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-});
+})
